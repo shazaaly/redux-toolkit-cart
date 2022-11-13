@@ -35,15 +35,22 @@ const cartSlice = createSlice({
         removeItemFromCart(state, action) {
             const newItem = action.payload
             const existingItem = state.items.find(item => item.id === newItem.id)
+            state.items.totalQuantity --
+
             if (existingItem) {
                 //if quant = 1 remove item from items[], if more decrease it by one //
-                
-                existingItem.item === 1 ? 
-                state.items.filter(item => item.id != existingItem.id) : existingItem.quantity --
+                if ( existingItem.item === 1) {
+                    state.items.filter(item => item.id != existingItem.id)
+                    
+                }
                 
 
             } else {
-                return Error('Item is not in Cart')
+                existingItem.quantity--
+                existingItem.price = existingItem.totalPrice - existingItem.price
+                
+
+
             }
 
 
