@@ -44,7 +44,6 @@ const cartSlice = createSlice({
                     
                 }
                 
-
             } else {
                 existingItem.quantity--
                 existingItem.price = existingItem.totalPrice - existingItem.price
