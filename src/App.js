@@ -5,10 +5,12 @@ import Products from './components/Shop/Products';
 
 function App() {
 
+  const quantity = useSelector(state => state.cart.totalQuantity)
+
   const visibility = useSelector(state => state.ui.showCart)
   return (
     <Layout>
-    { !visibility && <Cart />}
+    { !visibility && <Cart quantity={quantity} />}
       
       <Products />
     </Layout>

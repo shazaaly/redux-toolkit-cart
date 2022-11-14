@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
@@ -14,13 +12,14 @@ const cartSlice = createSlice({
     reducers: {
         addItemToCart(state, action) {
             const newItem = action.payload
+            state.totalQuantity++
             // check if item previously added so increase its count//
             const existingItem = state.items.find(item => item.id === newItem.id)
             if (!existingItem) {
                 state.items.push({
-                    itemId: newItem.id,
+                    id: newItem.id,
                     name: newItem.title,
-                    quantity: newItem.quantity,
+                    quantity: 1,
                     price: newItem.price,
                     totalPrice: newItem.price
                 })
@@ -33,21 +32,22 @@ const cartSlice = createSlice({
 
         },
         removeItemFromCart(state, action) {
-            const newItem = action.payload
-            const existingItem = state.items.find(item => item.id === newItem.id)
-            state.items.totalQuantity --
+            //at remove we  need only the id in payload //
+            const id = action.payload
+            const existingItem = state.items.find(item => item.id === id)
+            state.totalQuantity--
 
-            if (existingItem) {
+            
                 //if quant = 1 remove item from items[], if more decrease it by one //
-                if ( existingItem.item === 1) {
-                    state.items.filter(item => item.id != existingItem.id)
-                    
+                if (existingItem.item === 1) {
+                    state.items = state.items.filter(item => item.id !== id)
+
                 }
-                
-            } else {
+
+            else {
                 existingItem.quantity--
-                existingItem.price = existingItem.totalPrice - existingItem.price
-                
+                existingItem.totalPrice = existingItem.totalPrice - existingItem.price
+
 
 
             }
